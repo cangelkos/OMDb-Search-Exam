@@ -1,16 +1,15 @@
 {
   "name": "omdb-search-exam",
   "version": "1.0.0",
-  "description": "Attempt on the OMDB-search-Exam",
+  "description": "OMDB-search-Exam Attempt",
   "main": "index.js",
   "scripts": {
     "start": "run-s rimraf dev",
-    "build": "",
+    "build": "cross-env NODE_ENV=production webpack -p",
     "test": "echo \"Error: no test specified\" && exit 1",
     "rimraf": "rimraf client/dist",
     "webpack": "webpack",
-    "dev": "webpack-dev-server --content-base ./client",
-    "build": "cross-env NODE_ENV=production webpack -p"
+    "dev": "cross-env NODE_ENV=development webpack-dev-server --content-base ./client"
   },
   "repository": {
     "type": "git",
@@ -23,6 +22,10 @@
   },
   "homepage": "https://github.com/cangelkos/OMDb-Search-Exam#readme",
   "devDependencies": {
+    "babel-core": "^6.24.0",
+    "babel-loader": "^6.4.1",
+    "babel-preset-latest": "^6.24.0",
+    "babel-preset-react": "^6.23.0",
     "cross-env": "^3.2.4",
     "eslint": "^3.18.0",
     "npm-run-all": "^4.0.2",
@@ -30,5 +33,10 @@
     "rimraf": "^2.6.1",
     "webpack": "^2.3.0",
     "webpack-dev-server": "^2.4.2"
+  },
+  "dependencies": {
+    "react": "^15.4.2",
+    "react-dom": "^15.4.2",
+    "react-router": "^4.0.0"
   }
 }

@@ -1,1 +1,7 @@
-document.getElementById('app').innerHTML = 'Hello World Again'
+import React from 'react';
+import { render } from 'react-dom';
+
+render(
+  <h1>Hello, Everybody!</h1>,
+  document.getElementById('app')
+);
