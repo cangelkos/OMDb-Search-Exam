@@ -2,14 +2,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-//Redux Stuff
+//Redux Redux-Promise Redux-Thunk
 import { createStore, applyMiddleware } from 'redux';
 import { Provider, connect } from 'react-redux';
 import ReduxPromise from 'redux-promise';
 import ReduxThunk from 'redux-thunk';
 
-//React Router
-import { BrowserRouter, Route, Link } from 'react-router-dom'
+//React Router 4.0
+import { BrowserRouter, Route, Link, IndexRoute } from 'react-router-dom'
 
 //Reducers
 import reducers from './reducers';
@@ -23,13 +23,9 @@ import App from './components/App'
 
 ReactDOM.render(
   <Provider store={store}>
-  <BrowserRouter>
-    <Route path="/" component={App}>
-    </Route>
-  </BrowserRouter>
-
-
-   
+    <BrowserRouter>
+      <Route path="/" component={App} />
+    </BrowserRouter>
   </Provider>,
   document.getElementById('app')
 )

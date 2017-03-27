@@ -2,12 +2,21 @@
 import { combineReducers } from 'redux'
 
 //Reducers
+import omdbRequestReducer from './omdbRequestReducer'
+import movieDetailsReducer from './movieDetailsReducer'
+import moviesPageReducer from './moviesPageReducer'
+import moviesSearchTermReducer from './moviesSearchTermReducer'
+import isLoadingMoviesReducer from './isLoadingMoviesReducer'
 import moviesReducer from './moviesReducer'
-import currentMovieReducer from './currentMovieReducer'
 
 const rootReducer = combineReducers({
+  omdbRequest: omdbRequestReducer,
+  moviesPage: moviesPageReducer,
+  moviesSearchTerm: moviesSearchTermReducer,
   movies: moviesReducer,
-  currentMovie: currentMovieReducer,
+  movieDetails: movieDetailsReducer,
+  isLoadingMovies: isLoadingMoviesReducer
+
 })
 
 export default rootReducer;

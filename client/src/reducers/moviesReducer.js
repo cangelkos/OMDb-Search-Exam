@@ -1,20 +1,26 @@
-//Import Actions
-
 export default (state = null, action) => {
   
   switch (action.type) {
 
-    case 'GET_MOVIES':
-      return action.payload.data || {}
+    case 'CLEAR_MOVIES':     
+      //Returns the array of movies, or an empty array if no movies are found.
+      return []
+      break;
+
+    case 'GET_OMDB_MOVIES':     
+      //Returns the array of movies, or an empty array if no movies are found.
+      return action.payload.data.Search || []
+      break;
+
+    case 'GET_MORE_OMDB_MOVIES':     
+      //Returns the array of movies, or an empty array if no movies are found.
+      console.log('MORE MOVIES:',action.payload.data)
+      let result = action.payload.data.Search
+      return result 
+        ? state.concat(result) 
+        : state
       break;
     
-    case 'LOAD_MOVIES':
-      return {Response: 'Loading'}
-      break;
-    
-    case 'RESET_STATE':
-      return null
-      break;
   }
   return state
 }

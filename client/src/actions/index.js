@@ -1,41 +1,98 @@
 //Import axios for the AJAX Stuff
 import axios from 'axios'
 
-export const searchMovies = (term) => {
-  
-  let url = `http://www.omdbapi.com/?s=${term}&type=movie`
+export const getOMDBMovies = (term, page = 1) => {
+
+  let url = `http://www.omdbapi.com/?s=${term}&type=movie&page=${page}`
   let request = axios.get(url)
 
+  return page === 1
+    ? {
+      type: 'GET_OMDB_MOVIES',
+      payload: request
+    }
+    : {
+      type: 'GET_MORE_OMDB_MOVIES',
+      payload: request
+    }
+}
+
+export const clearMovies = () => {
   return {
-    type: 'GET_MOVIES',
+    type: 'CLEAR_MOVIES',
+    payload: []
+  }
+}
+
+const updateSearchTerm = (term) => {
+  return {
+    type: 'UPDATE_SEARCH_TERM',
+    payload: term
+  }
+}
+
+export const loadingMovies = (isLoadingMovies) => {
+  return {
+    type: 'LOADING_MOVIES',
+    payload: isLoadingMovies
+  }
+}
+
+export const moviesRequestThunk = (term) => {
+
+  return (dispatch, getStore) => {
+    
+    //Set isLoadingMovies to true
+    dispatch(loadingMovies(true))
+    dispatch(clearMovies())
+    dispatch(updateSearchTerm(term))
+    //Get movies from ODBCAPI, if no term is supplied, get the next page of results.
+    return dispatch(getOMDBMovies(term))
+    .catch(error => {
+      //ERROR THE CONNECTION.
+      console.log('GET REQUEST FAILED: ', error)
+      //Set isLoadingMovies back to false.
+    })  
+  }
+}
+
+const getMovieDetails = (id) => {
+  let url = `http://www.omdbapi.com/?i=${id}`
+  let request = axios.get(url)
+      
+  return {
+    type: 'GET_MOVIE_DETAILS',
     payload: request
   }
-
 }
 
-export const resetState = () => {
+export const clearMovieDetails = () => {
   return {
-    type: 'RESET_STATE',
+    type: 'CLEAR_MOVIE_DETAILS',
     payload: null
   }
 }
 
-export const loadMovies = () => {
-  console.log('loadmovies action fired')
-  return {
-    type: 'LOAD_MOVIES',
-    payload: null
+export const moreMoviesRequestThunk = () => {
+  
+  return (dispatch, getStore) => {
+    if (getStore().omdbRequest.Search) {
+
+      dispatch(loadingMovies(true))
+      return dispatch(getOMDBMovies(getStore().moviesSearchTerm, getStore().moviesPage.page + 1))
+      .catch(error => {
+        //ERROR THE CONNECTION.
+        console.log('GET REQUEST FAILED: ', error)
+        //Set isLoadingMovies back to false.
+      })  
+    }
   }
 }
 
-export const moviesRequest = (term) => {
-
-  return dispatch => {
-    dispatch(loadMovies())
-    dispatch(searchMovies(term)).then(action => {
-      console.log(action.payload.data.Response)
-    });
-    return Promise.resolve()
+export const movieDetailsRequestThunk = (id) => {
+  return (dispatch, getStore) => {
+    
+    dispatch(loadingMovies(true))
+    dispatch(getMovieDetails(id))
   }
-
 }

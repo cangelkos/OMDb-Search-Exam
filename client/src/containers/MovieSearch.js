@@ -2,10 +2,10 @@ import React, { Component } from 'react'
 
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { searchMovies, resetState, moviesRequest } from '../actions/index'
+import { resetState, moviesRequestThunk } from '../actions/index'
 
 import { Navbar, FormGroup, FormControl, Button } from 'react-bootstrap'
-
+import Scroll from 'react-scroll'
 import _ from 'lodash'
 
 class MovieSearch extends Component {
@@ -22,8 +22,13 @@ class MovieSearch extends Component {
   sendSearch() {
     var searchTerm = this.state.searchTerm.replace(/\s+/g,' ').trim()
     this.setState({searchTerm: searchTerm})
-    console.log('SEARCHING FOR: ', searchTerm)
-    searchTerm ? this.props.moviesRequest(searchTerm) : this.props.resetState()
+    
+    searchTerm 
+      && this.props.moviesRequestThunk(searchTerm)
+        .then(() => {
+          this.props.history.action !== "POP" && Scroll.animateScroll.scrollToTop()
+        })
+      
   }
 
   onInputChange(event) {
@@ -54,24 +59,24 @@ class MovieSearch extends Component {
   
   checkSearchTerm() {
    let searchTerm = this.props.history.location.search.split('s=')[1]
+   
     if (searchTerm) {
       if (unescape(searchTerm) !== this.state.searchTerm) {
         this.setState({searchTerm: unescape(searchTerm)})
         this.search()
       } else {
-        console.log('No search because search term is the same')
+        //DO NOT FIRE SEARCH
       }
       
     } else {
-      this.setState({searchTerm: ''})
-      this.props.resetState()
+      searchTerm && this.setState({searchTerm: ''})
+      
     }  
   }
 
   render() {
     return (
       <Navbar.Form>
-          
             <FormGroup>
             <form
               onSubmit={this.onSubmit.bind(this)}
@@ -87,7 +92,9 @@ class MovieSearch extends Component {
             </form>
             </FormGroup>
             {' '}
-            <Button type="submit" bsStyle="primary" onClick={this.onSubmit.bind(this)}>Search</Button>
+            <Button type="submit" bsStyle="primary" onClick={this.onSubmit.bind(this)}>
+              {this.props.isLoadingMovies ? (<img src="/assets/spinner.gif" />) : 'Search'}
+            </Button>
          
       </Navbar.Form>
     )
@@ -96,12 +103,12 @@ class MovieSearch extends Component {
 
 const  mapStateToProps = (state) => {
   return {
-    movies: state.movies
+    isLoadingMovies: state.isLoadingMovies
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
-  return bindActionCreators ({ searchMovies, resetState, moviesRequest }, dispatch)
+  return bindActionCreators ({ moviesRequestThunk }, dispatch)
 }
 
-export default connect(null, mapDispatchToProps)(MovieSearch)
+export default connect(mapStateToProps, mapDispatchToProps)(MovieSearch)

@@ -1,13 +1,12 @@
 import React from 'react';
-import {
-  Navbar, 
-  Pagination, 
-} from 'react-bootstrap';
+import { Navbar } from 'react-bootstrap';
+
+import FooterInfo from '../containers/FooterInfo'
 
 const Footer = () => {
   return (
     <Navbar fluid fixedBottom inverse>
-      Christopher Angelkos
+      <FooterInfo />
     </Navbar>
   );
 }

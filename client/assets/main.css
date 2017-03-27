@@ -93,3 +93,24 @@ form{
 input.form-control.input-lg{
   width: 99%;
 }
+
+.btn-primary {
+  width: 100px;
+}
+
+.btn-primary img {
+  width: 30px;
+}
+
+.navbar-text {
+  width: 100%;
+  text-align: center;
+}
+
+.modal-body {
+  font-size: 1.2em;
+}
+
+.modal-body b {
+  text-decoration: bold;
+}

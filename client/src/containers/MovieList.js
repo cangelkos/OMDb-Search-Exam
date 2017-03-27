@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { searchMovies  } from '../actions/index'
+import { moreMoviesRequestThunk  } from '../actions/index'
 
 import { Grid, Row, Col, Thumbnail, Clearfix } from 'react-bootstrap'
 
@@ -17,17 +17,22 @@ class MovieList extends Component {
     
   }
 
-  onClick(id) {
-    console.log(id);
+  onSensorChange(isVisible) {
+    isVisible && this.props.moreMoviesRequestThunk()
   }
 
-  onSensorChange(isVisible) {
-    console.log(isVisible && 'Load More Movies!')
+  onClick(id) {
+    this.props.history.push(`/movie/${id}`)
+    
+  }
+
+  loadMoreMovies() {
+
   }
 
   renderThumbnails() {
-    console.log('MOVIES: ', this.props.movies)
-    return this.props.movies.Search.map((movie, index) => {
+    //console.log('MOVIES: ', this.props.movies)
+    return this.props.movies.map((movie, index) => {
       return (
         <Col xs={12} sm={6} md={4} key={index}>
           <Thumbnail 
@@ -47,7 +52,6 @@ class MovieList extends Component {
   }
   
   render() {
-    console.log(this.props.movies)
     if (this.props.movies === null) {
       return (
         <Grid fluid>
@@ -56,44 +60,37 @@ class MovieList extends Component {
           </Row>
         </Grid>
       )
-    } else if (this.props.movies.Response === "True") {
+    } else if (this.props.movies.length) {
       return (
         <Grid fluid>
           <Row>
             {this.renderThumbnails()}
-            <VisibilitySensor onChange={this.onSensorChange.bind(this)}/>
+            <VisibilitySensor onChange={this.onSensorChange.bind(this)} scrollCheck intervalCheck={false} delayedCall />
           </Row>
         </Grid>
       )
-    } else if (this.props.movies.Response === "False") {
+    } else {
       return (
-        <Grid fluid>
+        <Grid >
           <Row>
             <div>'No movies Found'</div>
           </Row>
         </Grid>
       )
-    } else if (this.props.movies.Response === "Loading") {
-      return (
-        <Grid fluid>
-          <Row>
-            <div>'LOADING!'</div>
-          </Row>
-        </Grid>
-      )
-    }
+    } 
   }
 
 }
 
 const  mapStateToProps = (state) => {
   return {
-    movies: state.movies
+    movies: state.movies,
+    omdbRequest: state.omdbRequest
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
-  return bindActionCreators ({ searchMovies }, dispatch)
+  return bindActionCreators ({ moreMoviesRequestThunk }, dispatch)
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(MovieList)
