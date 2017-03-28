@@ -111,20 +111,23 @@ input.form-control.input-lg{
 .modal-content {
   color: white;
   background-color: #204d74;
-  opacity: 0.8
+  opacity: 0.8;
+  
 }
 
 .modal-body {
   background-color: black;
   font-size: 1.2em;
   color: white;
-  opacity: 0.9
+  opacity: 0.95;
+  line-height: 200%;
 }
 
 
 
 .modal-body b {
   text-decoration: bold;
+  color: #337ab7
 }
 
 

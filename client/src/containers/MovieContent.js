@@ -65,7 +65,7 @@ class MovieDetails extends Component {
           <Modal.Title>Movie Details</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <img src={this.props.movieDetails['Poster']}/>
+          <img src={this.props.movieDetails['Poster'] !== 'N/A' ? this.props.movieDetails['Poster'] : '/assets/noposter.jpg'}/>
           <hr/>
           {items}
           <b>Ratings: </b>
