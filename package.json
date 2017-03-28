@@ -1,0 +1,53 @@
+{
+  "name": "omdb-search-exam",
+  "version": "1.0.0",
+  "description": "OMDB-search-Exam Attempt",
+  "main": "index.js",
+  "scripts": {
+    "start": "run-s build serve",
+    "dev": "cross-env NODE_ENV=development webpack-dev-server --content-base ./client/public",
+    "build": "cross-env NODE_ENV=production webpack -p",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "rimraf": "rimraf client/dist",
+    "serve": "node server/server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cangelkos/OMDb-Search-Exam.git"
+  },
+  "author": "Christopher Angelkos",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/cangelkos/OMDb-Search-Exam/issues"
+  },
+  "homepage": "https://github.com/cangelkos/OMDb-Search-Exam#readme",
+  "devDependencies": {
+    "babel-core": "^6.24.0",
+    "babel-loader": "^6.4.1",
+    "babel-preset-latest": "^6.24.0",
+    "babel-preset-react": "^6.23.0",
+    "cross-env": "^3.2.4",
+    "eslint": "^3.18.0",
+    "npm-run-all": "^4.0.2",
+    "pre-commit": "^1.2.2",
+    "rimraf": "^2.6.1",
+    "simple-server": "^1.0.1",
+    "webpack": "^2.3.0",
+    "webpack-dev-server": "^2.4.2"
+  },
+  "dependencies": {
+    "axios": "^0.15.3",
+    "express": "^4.15.2",
+    "react": "^15.4.2",
+    "react-bootstrap": "^0.30.8",
+    "react-dom": "^15.4.2",
+    "react-redux": "^5.0.3",
+    "react-router": "^4.0.0",
+    "react-router-dom": "^4.0.0",
+    "react-scroll": "^1.4.7",
+    "react-visibility-sensor": "^3.7.0",
+    "redux": "^3.6.0",
+    "redux-promise": "^0.5.3",
+    "redux-thunk": "^2.2.0"
+  }
+}
