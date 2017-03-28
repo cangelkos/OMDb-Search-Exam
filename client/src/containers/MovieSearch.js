@@ -92,7 +92,7 @@ class MovieSearch extends Component {
             </form>
             </FormGroup>
             {' '}
-            <Button type="submit" bsStyle="primary" onClick={this.onSubmit.bind(this)}>
+            <Button bsStyle="primary" onClick={this.onSubmit.bind(this)}>
               {this.props.isLoadingMovies ? (<img src="/assets/spinner.gif" />) : 'Search'}
             </Button>
          
