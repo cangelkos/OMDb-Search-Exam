@@ -4,12 +4,12 @@
   "description": "OMDB-search-Exam Attempt",
   "main": "index.js",
   "scripts": {
-    "start": "run-s rimraf dev",
+    "start": "run-s build serve",
+    "dev": "cross-env NODE_ENV=development webpack-dev-server --content-base ./client/public",
     "build": "cross-env NODE_ENV=production webpack -p",
     "test": "echo \"Error: no test specified\" && exit 1",
     "rimraf": "rimraf client/dist",
-    "webpack": "webpack",
-    "dev": "cross-env NODE_ENV=development webpack-dev-server --content-base ./client"
+    "serve": "node server/server.js"
   },
   "repository": {
     "type": "git",
@@ -31,11 +31,13 @@
     "npm-run-all": "^4.0.2",
     "pre-commit": "^1.2.2",
     "rimraf": "^2.6.1",
+    "simple-server": "^1.0.1",
     "webpack": "^2.3.0",
     "webpack-dev-server": "^2.4.2"
   },
   "dependencies": {
     "axios": "^0.15.3",
+    "express": "^4.15.2",
     "react": "^15.4.2",
     "react-bootstrap": "^0.30.8",
     "react-dom": "^15.4.2",

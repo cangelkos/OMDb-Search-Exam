@@ -19,9 +19,14 @@ class MovieDetails extends Component {
   }
 
   close() {
+    //Start the hide modal animation:
     this.setState({ showModal: false });
+
+    //Set the movie details state back to null
     this.props.clearMovieDetails();
-    setTimeout(() => {this.props.history.goBack()}, 200) 
+    
+    //Go back only if user didn't type the url on the browser directly.
+    this.props.movies && setTimeout(() => {this.props.history.goBack()}, 200) 
   }
 
   open() {
@@ -95,6 +100,7 @@ const  mapStateToProps = (state) => {
   return {
     isLoadingMovies: state.isLoadingMovies,
     movieDetails: state.movieDetails,
+    movies: state.movies
   }
 }
 

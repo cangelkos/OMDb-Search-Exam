@@ -8,7 +8,7 @@ module.exports = {
     /*vendor: ['react', 'react-dom', 'react-router']*/
   },
   output: {
-    path: path.join(__dirname, 'client/dist'),
+    path: path.join(__dirname, 'client/public/dist'),
     publicPath: '/dist/', 
     filename: '[name].js'
   },
@@ -24,5 +24,7 @@ module.exports = {
       },
     ],
   },
-  
+  devServer: {
+    historyApiFallback: true
+  } 
 }
