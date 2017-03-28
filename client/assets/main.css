@@ -3,6 +3,7 @@
 */
 body {
   background-color: black;
+  font-family: 'Exo 2', sans-serif;
 }
 
 .main-container {
@@ -107,10 +108,33 @@ input.form-control.input-lg{
   text-align: center;
 }
 
-.modal-body {
-  font-size: 1.2em;
+.modal-content {
+  color: white;
+  background-color: #204d74;
+  opacity: 0.8
 }
+
+.modal-body {
+  background-color: black;
+  font-size: 1.2em;
+  color: white;
+  opacity: 0.9
+}
+
+
 
 .modal-body b {
   text-decoration: bold;
+}
+
+
+
+.modal-body img {
+  display: block;
+  margin-left: auto;
+  margin-right: auto
+}
+
+.modal-header {
+
 }
