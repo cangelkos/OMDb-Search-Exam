@@ -2,10 +2,11 @@
 import axios from 'axios'
 
 export const getOMDBMovies = (term, page = 1) => {
-
+  //Get data from api
   let url = `http://www.omdbapi.com/?s=${term}&type=movie&page=${page}`
   let request = axios.get(url)
-
+  
+  //If its the first page, dispatch GET_OMDB_MOVIES action, else dispatch GET_MORE_OMDB_MOVIES
   return page === 1
     ? {
       type: 'GET_OMDB_MOVIES',
@@ -18,6 +19,7 @@ export const getOMDBMovies = (term, page = 1) => {
 }
 
 export const clearMovies = () => {
+  //Removes movies from the movies array, before getting new data from the API
   return {
     type: 'CLEAR_MOVIES',
     payload: []
@@ -25,6 +27,7 @@ export const clearMovies = () => {
 }
 
 const updateSearchTerm = (term) => {
+  //Updates the searchTerm
   return {
     type: 'UPDATE_SEARCH_TERM',
     payload: term
@@ -32,6 +35,7 @@ const updateSearchTerm = (term) => {
 }
 
 export const loadingMovies = (isLoadingMovies) => {
+  //Sets the isLoadingMovies to true or false, to control rendering of spinners.
   return {
     type: 'LOADING_MOVIES',
     payload: isLoadingMovies
@@ -44,8 +48,12 @@ export const moviesRequestThunk = (term) => {
     
     //Set isLoadingMovies to true
     dispatch(loadingMovies(true))
+    //Clear the movies array
     dispatch(clearMovies())
+
+    //Update the Search Term in Redux
     dispatch(updateSearchTerm(term))
+    
     //Get movies from ODBCAPI, if no term is supplied, get the next page of results.
     return dispatch(getOMDBMovies(term))
     .catch(error => {
@@ -57,6 +65,8 @@ export const moviesRequestThunk = (term) => {
 }
 
 const getMovieDetails = (id) => {
+  
+  //Get movie details data from api
   let url = `http://www.omdbapi.com/?i=${id}`
   let request = axios.get(url)
       
@@ -67,6 +77,7 @@ const getMovieDetails = (id) => {
 }
 
 export const clearMovieDetails = () => {
+  //Clears the movie details when closing the window.
   return {
     type: 'CLEAR_MOVIE_DETAILS',
     payload: null
@@ -74,11 +85,15 @@ export const clearMovieDetails = () => {
 }
 
 export const moreMoviesRequestThunk = () => {
-  
+  //Get more movies from the API
   return (dispatch, getStore) => {
+    //Check if the last omdbRequest returned movies.
     if (getStore().omdbRequest.Search) {
-
+      
+      //Set the isLoading state, to trigger the spinner.
       dispatch(loadingMovies(true))
+
+      //Get the next page of results.
       return dispatch(getOMDBMovies(getStore().moviesSearchTerm, getStore().moviesPage.page + 1))
       .catch(error => {
         //ERROR THE CONNECTION.
@@ -91,8 +106,9 @@ export const moreMoviesRequestThunk = () => {
 
 export const movieDetailsRequestThunk = (id) => {
   return (dispatch, getStore) => {
-    
+    //Set the isLoading state, to trigger the spinner.
     dispatch(loadingMovies(true))
+    //Get the movie details.
     dispatch(getMovieDetails(id))
   }
 }

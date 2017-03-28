@@ -1,6 +1,8 @@
+//React
 import React from 'react';
-import MovieContent from '../containers/MovieContent'
 
+//Redux Containers
+import MovieContent from '../containers/MovieContent'
 
 const MovieDetails = ({ history }) => {
   return (

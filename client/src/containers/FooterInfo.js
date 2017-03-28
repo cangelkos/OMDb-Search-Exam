@@ -10,9 +10,13 @@ class FooterInfo extends Component {
     return (
       <Navbar.Text>
         {
-        this.props.moviesPage
+        this.props.isLoadingMovies
+        ? 'Loading...'
+        : this.props.moviesPage
           ? 'Now viewing: ' + this.props.movies.length  + ' of ' + this.props.moviesPage.total + ' results.'
-          : 'Please search for movies by title.'
+          : this.props.movies
+            ? 'No movies found...'
+            : 'Please search for movies by title.'
         }
 
       </Navbar.Text>

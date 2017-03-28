@@ -6,7 +6,7 @@ import { resetState, moviesRequestThunk } from '../actions/index'
 
 import { Navbar, FormGroup, FormControl, Button } from 'react-bootstrap'
 import Scroll from 'react-scroll'
-import _ from 'lodash'
+import { debounce, once } from 'lodash'
 
 class MovieSearch extends Component {
   constructor() {
@@ -15,8 +15,8 @@ class MovieSearch extends Component {
       searchTerm: ''
     }
 
-    this.search = _.debounce((isSubmit, offset) => {this.sendSearch(isSubmit, offset)}, 600)
-    this.setURLChangeListener = _.once(this.createURLChangeListener)
+    this.search = debounce((isSubmit, offset) => {this.sendSearch(isSubmit, offset)}, 600)
+    this.setURLChangeListener = once(this.createURLChangeListener)
   }
   
   sendSearch() {

@@ -6,6 +6,7 @@ import { moreMoviesRequestThunk  } from '../actions/index'
 
 import { Grid, Row, Col, Thumbnail, Clearfix } from 'react-bootstrap'
 
+
 import VisibilitySensor from 'react-visibility-sensor'
 
 class MovieList extends Component {
@@ -13,25 +14,16 @@ class MovieList extends Component {
     super()
   }
 
-  componentDidMount() {
-    
-  }
-
   onSensorChange(isVisible) {
     isVisible && this.props.moreMoviesRequestThunk()
   }
 
   onClick(id) {
-    this.props.history.push(`/movie/${id}`)
-    
-  }
-
-  loadMoreMovies() {
-
+    this.props.history.push(`/?s=${this.props.searchTerm}`)
+    this.props.history.push(`/movie/${id}`)    
   }
 
   renderThumbnails() {
-    //console.log('MOVIES: ', this.props.movies)
     return this.props.movies.map((movie, index) => {
       return (
         <Col xs={12} sm={6} md={4} key={index}>
@@ -52,32 +44,16 @@ class MovieList extends Component {
   }
   
   render() {
-    if (this.props.movies === null) {
-      return (
-        <Grid fluid>
-          <Row>
-            <div>'Type a movie to Search'</div>
-          </Row>
-        </Grid>
-      )
-    } else if (this.props.movies.length) {
-      return (
-        <Grid fluid>
+    return (
+      this.props.movies
+      ? <Grid fluid>
           <Row>
             {this.renderThumbnails()}
             <VisibilitySensor onChange={this.onSensorChange.bind(this)} scrollCheck intervalCheck={false} delayedCall />
           </Row>
         </Grid>
+      : null
       )
-    } else {
-      return (
-        <Grid >
-          <Row>
-            <div>'No movies Found'</div>
-          </Row>
-        </Grid>
-      )
-    } 
   }
 
 }
@@ -85,7 +61,8 @@ class MovieList extends Component {
 const  mapStateToProps = (state) => {
   return {
     movies: state.movies,
-    omdbRequest: state.omdbRequest
+    omdbRequest: state.omdbRequest,
+    searchTerm: state.moviesSearchTerm
   }
 }
 

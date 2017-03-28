@@ -1,4 +1,7 @@
+//React
 import React from 'react';
+
+//React Bootstrap
 import { 
   Navbar, 
   FormGroup, 
@@ -6,6 +9,8 @@ import {
   Button,
    } from 'react-bootstrap';
 
+
+//Redux Containers
 import MovieSearch from '../containers/MovieSearch'
 
 const Header = ({ history }) => {
@@ -14,7 +19,7 @@ const Header = ({ history }) => {
     <Navbar fluid fixedTop inverse>
       <Navbar.Header>
         <Navbar.Brand>
-          <a href="#">OMDb-Search-Exam</a>
+          <a href="/">OMDb-Search-App</a>
         </Navbar.Brand>
         <Navbar.Toggle />
       </Navbar.Header>
